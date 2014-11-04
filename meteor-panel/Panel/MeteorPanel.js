@@ -9,17 +9,44 @@
   // there are definitely mechanisms for that, like
   // "background pages."
 
-  chrome.devtools.inspectedWindow.eval(
-    '({release: Meteor.release})',
-    function (result, isException) {
-      if (result.release){
-        document.body.appendChild(document.createTextNode(
-          'Meteor.release = ' + result.release));
-      } else {
-        document.body.appendChild(document.createTextNode("This page does not use Meteor"));
+  var watchRefresh = function (cb) {
+    var port = chrome.extension.connect();
+    port.postMessage({
+      action: 'register',
+      inspectedTabId: chrome.devtools.inspectedWindow.tabId
+    });
+    port.onMessage.addListener(function(msg) {
+      if (msg === 'refresh' && cb) {
+        cb();
       }
     });
+    port.onDisconnect.addListener(function (a) {
+      console.log(a);
+    });
+  };
 
+  var pageLoaded = function(){
+    chrome.devtools.inspectedWindow.eval(
+      '({release: Meteor.release, collections: Object.keys(window._meteorCollections||{})})',
+      function (result, isException) {
+        if (result.release){
+          document.body.appendChild(document.createTextNode(
+            'Meteor.release = ' + result.release + '; collections:' + result.collections));
+          if (result.collections){
+            var list = "";
+            for (var i = 0; i < result.collections.length; i++) {
+              list += '<li>'+result.collections[i]+'</li>';
+            };
+            document.getElementById('collections').innerHTML=list;
+          }
+        } else {
+          document.body.appendChild(document.createTextNode("This page does not use Meteor"));
+        }
+      }
+    );
+  };
+  watchRefresh(pageLoaded);
+  pageLoaded();
 
   var injected = function(){
     var _meteor;
