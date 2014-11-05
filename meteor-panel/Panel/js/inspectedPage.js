@@ -30,10 +30,11 @@ inspectedPage = function () {
 
   this.loadCollection = function(name, callback){
     chrome.devtools.inspectedWindow.eval(
-      'window._meteorCollections.' + name + '.find().fetch()',
+      'EJSON.stringify(window._meteorCollections.' + name + '.find().fetch())',
       function(result, exception){
         if (!exception){
-          callback(result);
+          var collection = EJSON.parse(result);
+          callback(collection);
         }
       }
     );
