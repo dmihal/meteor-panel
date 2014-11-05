@@ -9,91 +9,62 @@
   // there are definitely mechanisms for that, like
   // "background pages."
 
-  var watchRefresh = function (cb) {
-    var port = chrome.extension.connect();
-    port.postMessage({
-      action: 'register',
-      inspectedTabId: chrome.devtools.inspectedWindow.tabId
-    });
-    port.onMessage.addListener(function(msg) {
-      if (msg === 'refresh' && cb) {
-        cb();
+  var page = new inspectedPage();
+  page.onloaded = function(release, stats){
+    if (release){
+      document.body.appendChild(document.createTextNode(
+        'Meteor.release = ' + release + '; collections:' + stats));
+      if (stats){
+        var click = function(){
+          page.loadCollection(this.innerText, function(response){
+            displayTable(response);
+          });
+        };
+        for (var i = 0; i < stats.length; i++) {
+          var el = document.createElement('li');
+          el.innerText = stats[i];
+          el.addEventListener('click',click);
+          document.getElementById('collections').appendChild(el);
+        };
       }
-    });
-    port.onDisconnect.addListener(function (a) {
-      console.log(a);
-    });
+    } else {
+      document.body.appendChild(document.createTextNode("This page does not use Meteor"));
+    }
   };
 
-  var pageLoaded = function(){
-    chrome.devtools.inspectedWindow.eval(
-      '({release: Meteor.release, collections: Object.keys(window._meteorCollections||{})})',
-      function (result, isException) {
-        if (result.release){
-          document.body.appendChild(document.createTextNode(
-            'Meteor.release = ' + result.release + '; collections:' + result.collections));
-          if (result.collections){
-            var list = "";
-            for (var i = 0; i < result.collections.length; i++) {
-              list += '<li>'+result.collections[i]+'</li>';
-            };
-            document.getElementById('collections').innerHTML=list;
-          }
-        } else {
-          document.body.appendChild(document.createTextNode("This page does not use Meteor"));
+  var displayTable = function(data){
+    var head = document.querySelector("#collectionData thead tr");
+    var body = document.querySelector("#collectionData tbody");
+    var el;
+    var headers = [];
+
+    head.innerHTML = "";
+    body.innerHTML = "";
+    for (var i = 0; i < data.length; i++) {
+      for(var key in data[i]){
+        if (headers.indexOf(key) == -1){
+          headers.push(key);
         }
       }
-    );
-  };
-  watchRefresh(pageLoaded);
-  pageLoaded();
-
-  var injected = function(){
-    var _meteor;
-    window._meteorCollections = {};
-    // Function that does subclassing
-    var __extends = function(child, parent) {
-      for (var key in parent) {
-        if (Object.prototype.hasOwnProperty.call(parent, key)) {
-          child[key] = parent[key];
-        }
-      }
-      function ctor() { this.constructor = child; }
-      ctor.prototype = parent.prototype;
-      child.prototype = new ctor;
-      child.__super__ = parent.prototype;
-      return child;
-    };
-    var __watch = function(name, callback) {
-      var obj = {};
-      Object.defineProperty(window, name, {
-        get: function () { return obj; },
-        set: function (val) {
-          obj = val;
-          callback(obj);
-        }
-      });
-    };
-
-    var initializeMeteor = function(){
-      var MyCollection = function(name, options){
-        MyCollection.__super__.constructor.apply(this, arguments);
-        console.log('collection',arguments,this);
-        _meteorCollections[name] = this;
+    }
+    for (var i = 0; i < headers.length; i++) {
+      el = document.createElement('th');
+      el.innerText = headers[i];
+      head.appendChild(el);
+    }
+    for (var i = 0; i < data.length; i++) {
+      var row = document.createElement('tr');
+      for (var h = 0; h < headers.length; h++) {
+        el = document.createElement('td');
+        el.innerText = String(data[i][headers[h]]) || "";
+        row.appendChild(el);
       };
-      __extends(MyCollection, Meteor.Collection);
-      Meteor.Collection = MyCollection;
+      body.appendChild(row);
+    }
+  }
 
-    };
-    __watch("Meteor", initializeMeteor);
-    
-  };
-
-  var inject = function()
-  {
-    chrome.devtools.inspectedWindow.reload({
-      injectedScript : "(" + injected.toString() + ")()"
-    });
+  var inject = function(){
+    page.reload(getSnifferScript());
   }
   document.getElementById('reload').addEventListener('click', inject);
 
