@@ -25,6 +25,17 @@ body {
 	width: 100%;
 }
 
+#nav {
+	padding: 0;
+}
+#nav li {
+	padding: 2px 5px;
+	cursor: pointer;
+}
+#nav li.selected{
+	background: #CCC;
+}
+
 table {
 	border-spacing: 0;
 	border-collapse: separate;

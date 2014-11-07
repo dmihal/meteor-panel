@@ -16,6 +16,7 @@
       if (stats.injected){
         document.getElementById('uninjected').style.display = "none";
         var click = function(){
+          selectListElement(this);
           page.loadCollection(this.innerText, function(response){
             displayTable(response);
           });
@@ -33,6 +34,14 @@
       document.getElementById('unsupported').style.display = "block";
     }
   };
+
+  var selectListElement = function(element){
+    var elements = document.querySelectorAll('li.selected');
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].classList.remove('selected');
+    }
+    element.classList.add('selected');
+  }
 
   var displayTable = function(data){
     var head = document.querySelector("#collectionData thead tr");
