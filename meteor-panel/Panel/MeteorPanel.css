@@ -1,0 +1,40 @@
+body {
+	margin: 0;
+	font-family: 'Segoe UI', Lucida Grande, Tahoma, sans-serif;
+	cursor: default;
+	font-size: 12px;
+}
+#container {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+}
+#leftPanel {
+	float: left;
+	padding: 10px;
+	background: #EEE;
+	display: flex;
+	position: relative;
+	flex-direction: column;
+	width: 250px;
+}
+#main {
+	display: flex;
+	flex-direction: column;
+	overflow: scroll;
+	width: 100%;
+}
+
+table {
+	border-spacing: 0;
+	border-collapse: separate;
+	font-size: 11px;
+}
+tbody tr:nth-child(even) {
+	background: rgb(234, 243, 255);
+}
+
+
+.hidden {
+	display: none;
+}

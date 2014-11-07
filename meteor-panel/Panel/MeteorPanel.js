@@ -12,23 +12,25 @@
   var page = new inspectedPage();
   page.onloaded = function(release, stats){
     if (release){
-      document.body.appendChild(document.createTextNode(
-        'Meteor.release = ' + release + '; collections:' + stats));
-      if (stats){
+      document.getElementById('unsupported').style.display = "none";
+      if (stats.injected){
+        document.getElementById('uninjected').style.display = "none";
         var click = function(){
           page.loadCollection(this.innerText, function(response){
             displayTable(response);
           });
         };
-        for (var i = 0; i < stats.length; i++) {
+        for (var i = 0; i < stats.collections.length; i++) {
           var el = document.createElement('li');
-          el.innerText = stats[i];
+          el.innerText = stats.collections[i];
           el.addEventListener('click',click);
           document.getElementById('collections').appendChild(el);
         };
+      } else {
+        document.getElementById('uninjected').style.display = "block";
       }
     } else {
-      document.body.appendChild(document.createTextNode("This page does not use Meteor"));
+      document.getElementById('unsupported').style.display = "block";
     }
   };
 

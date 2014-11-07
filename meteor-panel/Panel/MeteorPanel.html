@@ -3,17 +3,29 @@
   <link rel='stylesheet' href='MeteorPanel.css'>
 </head>
 <body>
-  <h1>Hello Meteor Panel!</h1>
-
-  <button id="reload">Reload</button>
-
-  <h2>Collections</h2>
-  <ul id="collections">
-  </ul>
-  <table id="collectionData">
-  	<thead><tr></tr></thead>
-  	<tbody></tbody>
-  </table>
+  <div id="container">
+    <div id="leftPanel">
+      <ol>
+        <li>Collections</li>
+        <ul id="collections">
+        </ul>
+      </ol>
+    </div>
+    <div id="main">
+      <div id="unsupported" class="hidden">
+        This site does not use meteor
+      </div>
+      <div id="uninjected" class="hidden">
+        <h2>This site uses meteor!</h2>
+        <p>Reload this page to access all data</p>
+        <button id="reload">Reload</button>
+      </div>
+      <table id="collectionData">
+      	<thead><tr></tr></thead>
+      	<tbody></tbody>
+      </table>
+    </div>
+  </div>
 
   <script src="lib/underscore.js"></script>
   <script src="lib/base64.js"></script>
