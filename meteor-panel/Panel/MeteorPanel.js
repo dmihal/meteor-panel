@@ -35,17 +35,32 @@
     }
   };
 
+  var showSessions = function(){
+    selectListElement(this);
+    page.getSessions(function(sessions){
+      document.querySelector("#tableData thead tr").innerHTML = '<th>Key</th><th>Value</th>';
+      var body = document.querySelector("#tableData tbody");
+      body.innerHTML = "";
+      for (var key in sessions) {
+        var row = document.createElement('tr');
+        row.innerHTML = '<td>' + key + '</td><td>' + sessions[key] + '</td>';
+        body.appendChild(row);
+      };
+    });
+  };
+  document.getElementById('listSession').addEventListener('click', showSessions);
+
   var selectListElement = function(element){
     var elements = document.querySelectorAll('li.selected');
     for (var i = 0; i < elements.length; i++) {
       elements[i].classList.remove('selected');
     }
     element.classList.add('selected');
-  }
+  };
 
   var displayTable = function(data){
-    var head = document.querySelector("#collectionData thead tr");
-    var body = document.querySelector("#collectionData tbody");
+    var head = document.querySelector("#tableData thead tr");
+    var body = document.querySelector("#tableData tbody");
     var el;
     var headers = [];
 

@@ -38,7 +38,16 @@ inspectedPage = function () {
         }
       }
     );
-  }
+  };
+  this.getSessions = function(callback){
+    chrome.devtools.inspectedWindow.eval(
+      'EJSON.stringify(Session.keys)',
+      function(result, exception){
+        var session = EJSON.parse(result);
+        callback(session);
+      }
+    );
+  };
 
 
   this.reload = function(script){
