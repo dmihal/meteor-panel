@@ -10,8 +10,8 @@
   // "background pages."
 
   var page = new inspectedPage();
-  page.onloaded = function(release, stats){
-    if (release){
+  page.onloaded = function(hasMeteor, stats){
+    if (hasMeteor){
       document.getElementById('unsupported').style.display = "none";
       if (stats.injected){
         document.getElementById('uninjected').style.display = "none";

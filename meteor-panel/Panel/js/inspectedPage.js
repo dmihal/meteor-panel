@@ -19,9 +19,9 @@ inspectedPage = function () {
   this.onloaded = null;
   var pageLoaded = function(){
     chrome.devtools.inspectedWindow.eval(
-      '({release: Meteor.release, injected: !!window._meteorCollections, collections: Object.keys(window._meteorCollections||{})})',
+      '({hasMeteor: !!window.Meteor, injected: !!window._meteorCollections, collections: Object.keys(window._meteorCollections||{}) })',
       function (result, isException) {
-        that.onloaded && that.onloaded(result.release, {injected: result.injected, collections: result.collections});
+        that.onloaded && that.onloaded(result.hasMeteor, {injected: result.injected, collections: result.collections});
       }
     );
   };

@@ -32,17 +32,18 @@ getSnifferScript = function(){
       });
     };
 
-    var initializeMeteor = function(){
+    var initializeMeteor = function(obj){
       var MyCollection = function(name, options){
         MyCollection.__super__.constructor.apply(this, arguments);
         console.log('collection',arguments,this);
         _meteorCollections[name] = this;
       };
-      __extends(MyCollection, Meteor.Collection);
-      Meteor.Collection = MyCollection;
+      __extends(MyCollection, obj.Collection);
+      obj.Collection = MyCollection;
 
     };
     __watch("Meteor", initializeMeteor);
+    __watch("Mongo", initializeMeteor);
     
   };
 
