@@ -21,11 +21,13 @@
             displayTable(response);
           });
         };
+        var collectionsList = document.getElementById('collections');
+        collectionsList.innerHTML = '';
         for (var i = 0; i < stats.collections.length; i++) {
           var el = document.createElement('li');
           el.innerText = stats.collections[i];
           el.addEventListener('click',click);
-          document.getElementById('collections').appendChild(el);
+         collectionsList .appendChild(el);
         };
       } else {
         document.getElementById('uninjected').style.display = "block";
