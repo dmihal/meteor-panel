@@ -14,6 +14,9 @@
     if (hasMeteor){
       showPage('meteorPage');
       document.getElementById('unsupported').style.display = "none";
+
+      document.getElementById('versionNum').innerText = stats.release;
+
       if (stats.injected){
         document.getElementById('uninjected').style.display = "none";
         var click = function(){

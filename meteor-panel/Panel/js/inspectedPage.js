@@ -19,9 +19,15 @@ inspectedPage = function () {
   this.onloaded = null;
   var pageLoaded = function(){
     chrome.devtools.inspectedWindow.eval(
-      '({hasMeteor: !!window.Meteor, injected: !!window._meteorCollections, collections: Object.keys(window._meteorCollections||{}) })',
+      '({hasMeteor: !!window.Meteor, injected: !!window._meteorCollections, collections: Object.keys(window._meteorCollections||{}),'+
+        'release: window.Meteor && Meteor.release'+
+        ' })',
       function (result, isException) {
-        that.onloaded && that.onloaded(result.hasMeteor, {injected: result.injected, collections: result.collections});
+        that.onloaded && that.onloaded(result.hasMeteor, {
+          injected: result.injected,
+          collections: result.collections,
+          release: result.release
+        });
       }
     );
   };
