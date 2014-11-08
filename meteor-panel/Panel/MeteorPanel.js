@@ -68,7 +68,7 @@
       body.innerHTML = "";
       for (var key in sessions) {
         var row = document.createElement('tr');
-        row.innerHTML = '<td>' + key + '</td><td>' + sessions[key] + '</td>';
+        row.innerHTML = '<td>' + key + '</td><td>' + displayValue(sessions[key]) + '</td>';
         body.appendChild(row);
       };
     });
@@ -115,12 +115,28 @@
       var row = document.createElement('tr');
       for (var h = 0; h < headers.length; h++) {
         el = document.createElement('td');
-        el.innerText = String(data[i][headers[h]]) || "";
+        el.innerText = displayValue(data[i][headers[h]]);
         row.appendChild(el);
       };
       body.appendChild(row);
     }
   }
+
+  var displayValue = function(value){
+    var str;
+    if (typeof value == 'object') {
+      if (value instanceof Date){
+        str = value.toUTCString();
+      } else if (value instanceof Array){
+        str = EJSON.stringify(value);
+      } else {
+        str = EJSON.stringify(value);
+      }
+    } else {
+      str = String(value);
+    }
+    return str || "";
+  };
 
   var inject = function(){
     page.reload(getSnifferScript());
