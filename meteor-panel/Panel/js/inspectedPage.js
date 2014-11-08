@@ -48,6 +48,15 @@ inspectedPage = function () {
       }
     );
   };
+  this.getUser = function(callback){
+    chrome.devtools.inspectedWindow.eval(
+      'EJSON.stringify(Meteor.user && Meteor.user())',
+      function(result, exception){
+        var user = EJSON.parse(result);
+        callback(user);
+      }
+    );
+  }
 
 
   this.reload = function(script){

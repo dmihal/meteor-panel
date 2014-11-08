@@ -12,11 +12,13 @@
   var page = new inspectedPage();
   page.onloaded = function(hasMeteor, stats){
     if (hasMeteor){
+      showPage('meteorPage');
       document.getElementById('unsupported').style.display = "none";
       if (stats.injected){
         document.getElementById('uninjected').style.display = "none";
         var click = function(){
           selectListElement(this);
+          showPage('tablePage');
           page.loadCollection(this.innerText, function(response){
             displayTable(response);
           });
@@ -37,8 +39,26 @@
     }
   };
 
+  var showMeteor = function(){
+    selectListElement(this);
+    showPage('meteorPage');
+    page.getUser(function(user){
+      var username;
+      if (user === null){
+        username = "Not logged in";
+      } else if(user === false){
+        username = "No users";
+      } else {
+        username = user.username || (user.profile && user.profile.name);
+      }
+      document.getElementById('username').innerText = username;
+    });
+  };
+  document.getElementById('listMeteor').addEventListener('click', showMeteor);
+
   var showSessions = function(){
     selectListElement(this);
+    showPage('tablePage');
     page.getSessions(function(sessions){
       document.querySelector("#tableData thead tr").innerHTML = '<th>Key</th><th>Value</th>';
       var body = document.querySelector("#tableData tbody");
@@ -58,6 +78,14 @@
       elements[i].classList.remove('selected');
     }
     element.classList.add('selected');
+  };
+
+  var showPage = function(pageID){
+    var pages = document.querySelectorAll('.page');
+    for (var i = 0; i < pages.length; i++) {
+      var page = pages[i];
+      page.style.display = page.id == pageID ? 'block' : 'none';
+    };
   };
 
   var displayTable = function(data){

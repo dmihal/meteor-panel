@@ -41,6 +41,9 @@ getSnifferScript = function(){
       __extends(MyCollection, obj.Collection);
       obj.Collection = MyCollection;
 
+      if (obj.users) {
+        _meteorCollections.users = obj.users;
+      }
     };
     __watch("Meteor", initializeMeteor);
     __watch("Mongo", initializeMeteor);
