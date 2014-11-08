@@ -35,6 +35,10 @@ body {
 #nav li.selected{
 	background: #CCC;
 }
+#uninjected {
+	background: #DDD;
+	padding: 5px;
+}
 
 table {
 	border-spacing: 0;
@@ -48,4 +52,8 @@ tbody tr:nth-child(even) {
 
 .hidden {
 	display: none;
+}
+.strong {
+	font-weight: bold;
+	font-size: 120%;
 }
