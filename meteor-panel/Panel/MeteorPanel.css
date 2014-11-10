@@ -17,6 +17,7 @@ body {
 	position: relative;
 	flex-direction: column;
 	width: 250px;
+	border-right: 1px solid rgb(64%, 64%, 64%);
 }
 #main {
 	display: flex;
@@ -31,6 +32,7 @@ body {
 #nav li {
 	padding: 2px 5px;
 	cursor: pointer;
+	list-style-type: none;
 }
 #nav li.selected{
 	background: #CCC;
