@@ -18,6 +18,8 @@ body {
 	flex-direction: column;
 	width: 250px;
 	border-right: 1px solid rgb(64%, 64%, 64%);
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 #main {
 	display: flex;

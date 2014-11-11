@@ -20,13 +20,15 @@ inspectedPage = function () {
   var pageLoaded = function(){
     chrome.devtools.inspectedWindow.eval(
       '({hasMeteor: !!window.Meteor, injected: !!window._meteorCollections, collections: Object.keys(window._meteorCollections||{}),'+
-        'release: window.Meteor && Meteor.release'+
+        'release: window.Meteor && Meteor.release,'+
+        'templates: EJSON.stringify(' + getTemplateSnifferScript() + ')' +
         ' })',
       function (result, isException) {
         that.onloaded && that.onloaded(result.hasMeteor, {
           injected: result.injected,
           collections: result.collections,
-          release: result.release
+          release: result.release,
+          templates: EJSON.parse(result.templates)
         });
       }
     );

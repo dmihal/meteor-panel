@@ -51,4 +51,27 @@ getSnifferScript = function(){
   };
 
   return "(" + injected.toString() + ")()";
-}
+};
+
+getTemplateSnifferScript = function(){
+  var injected = function(){
+    window._meteorTemplates = {};
+
+    Object.keys(window.Template || {}).forEach(function(name) {
+      var template = Template[name];
+      if ((template.kind && template.kind.indexOf('Template_') == 0) ||
+          (template.viewName && template.viewName.indexOf('Template.') == 0)){
+        _meteorTemplates[name] = {
+          helpers:[],
+          events:[],
+          hidden: name.indexOf('_') == 0,
+          instances:[]
+        };
+      }
+    });
+
+    return _meteorTemplates;
+  };
+
+  return "(" + injected.toString() + ")()";
+};

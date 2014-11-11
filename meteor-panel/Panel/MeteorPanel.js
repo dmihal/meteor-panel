@@ -17,6 +17,14 @@
 
       document.getElementById('versionNum').innerText = stats.release;
 
+      var templatesList = document.getElementById('templates');
+      templatesList.innerHTML = '';
+      for (var tempName in stats.templates) {
+        var el = document.createElement('li');
+        el.innerText = tempName;
+        templatesList.appendChild(el);
+      }
+
       if (stats.injected){
         document.getElementById('uninjected').style.display = "none";
         var click = function(){
@@ -32,7 +40,7 @@
           var el = document.createElement('li');
           el.innerText = stats.collections[i];
           el.addEventListener('click',click);
-         collectionsList .appendChild(el);
+          collectionsList.appendChild(el);
         };
       } else {
         document.getElementById('uninjected').style.display = "block";
