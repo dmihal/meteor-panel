@@ -17,37 +17,46 @@
 
       document.getElementById('versionNum').innerText = stats.release;
 
-      var templatesList = document.getElementById('templates');
-      templatesList.innerHTML = '';
-      for (var tempName in stats.templates) {
-        var el = document.createElement('li');
-        el.innerText = tempName;
-        templatesList.appendChild(el);
-      }
+      setTemplatesList(stats.templates);
 
       if (stats.injected){
         document.getElementById('uninjected').style.display = "none";
-        var click = function(){
-          selectListElement(this);
-          showPage('tablePage');
-          page.loadCollection(this.innerText, function(response){
-            displayTable(response);
-          });
-        };
-        var collectionsList = document.getElementById('collections');
-        collectionsList.innerHTML = '';
-        for (var i = 0; i < stats.collections.length; i++) {
-          var el = document.createElement('li');
-          el.innerText = stats.collections[i];
-          el.addEventListener('click',click);
-          collectionsList.appendChild(el);
-        };
+
+        setCollectionsList(stats.collections);
       } else {
         document.getElementById('uninjected').style.display = "block";
       }
     } else {
       document.getElementById('unsupported').style.display = "block";
     }
+  };
+
+  var setTemplatesList = function(templates){
+    var templatesList = document.getElementById('templates');
+    templatesList.innerHTML = '';
+    for (var tempName in templates) {
+      var el = document.createElement('li');
+      el.innerText = tempName;
+      templatesList.appendChild(el);
+    }
+  };
+  var setCollectionsList = function(collections){
+    var click = function(){
+      selectListElement(this);
+      showPage('tablePage');
+      page.loadCollection(this.innerText, function(response){
+        displayTable(response);
+      });
+    };
+
+    var collectionsList = document.getElementById('collections');
+    collectionsList.innerHTML = '';
+    for (var i = 0; i < collections.length; i++) {
+      var el = document.createElement('li');
+      el.innerText = collections[i];
+      el.addEventListener('click',click);
+      collectionsList.appendChild(el);
+    };
   };
 
   var showMeteor = function(){
