@@ -24,7 +24,7 @@ body {
 #main {
 	display: flex;
 	flex-direction: column;
-	overflow: scroll;
+	overflow: auto;
 	width: 100%;
 }
 
@@ -48,9 +48,20 @@ table {
 	border-spacing: 0;
 	border-collapse: separate;
 	font-size: 11px;
+	min-width: 100%;
 }
 tbody tr:nth-child(even) {
 	background: rgb(234, 243, 255);
+}
+th {
+	background-color: rgb(236, 236, 236);
+	border-bottom: 1px solid #aaa;
+}
+td, th {
+	border-left: 1px solid #aaa;
+}
+td:first-child, th:first-child {
+	border-left: none;
 }
 
 .page {
