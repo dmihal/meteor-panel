@@ -64,7 +64,16 @@ inspectedPage = function () {
         callback(user);
       }
     );
-  }
+  };
+  this.getTemplate = function(name, callback){
+    chrome.devtools.inspectedWindow.eval(
+      'EJSON.stringify(window._meteorTemplates && window._meteorTemplates.'+name+')',
+      function(result, exception){
+        var session = EJSON.parse(result);
+        callback(session);
+      }
+    );
+  };
 
 
   this.reload = function(script){

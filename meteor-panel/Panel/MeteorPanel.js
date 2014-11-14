@@ -32,11 +32,26 @@
   };
 
   var setTemplatesList = function(templates){
+    var click = function(){
+      selectListElement(this);
+      showPage('templatePage');
+      page.getTemplate(this.innerText, function(template){
+        var eventsList = document.getElementById('templateEvents');
+        eventsList.innerHTML = '';
+        for (var i = 0; i < template.events.length; i++) {
+          var el = document.createElement('li');
+          el.innerText = template.events[i];
+          eventsList.appendChild(el);
+        };
+      });
+    }
+
     var templatesList = document.getElementById('templates');
     templatesList.innerHTML = '';
     for (var tempName in templates) {
       var el = document.createElement('li');
       el.innerText = tempName;
+      el.addEventListener('click', click);
       templatesList.appendChild(el);
     }
   };

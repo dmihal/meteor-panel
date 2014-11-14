@@ -63,7 +63,9 @@ getTemplateSnifferScript = function(){
           (template.viewName && template.viewName.indexOf('Template.') == 0)){
         _meteorTemplates[name] = {
           helpers:[],
-          events:[],
+          events: template._events && template._events.map(function(obj){
+            return obj.events + ' ' + obj.selector;
+          }) || [],
           hidden: name.indexOf('_') == 0,
           instances:[]
         };
