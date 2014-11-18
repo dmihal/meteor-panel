@@ -74,6 +74,15 @@ inspectedPage = function () {
       }
     );
   };
+  this.getEvents = function(callback){
+    chrome.devtools.inspectedWindow.eval(
+      'EJSON.stringify(window._meteorEvents)',
+      function(result, exception){
+        var session = EJSON.parse(result);
+        callback(session);
+      }
+    );
+  };
 
 
   this.reload = function(script){

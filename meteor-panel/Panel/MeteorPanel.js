@@ -91,6 +91,23 @@
   };
   document.getElementById('listMeteor').addEventListener('click', showMeteor);
 
+  var showEvents = function(){
+    selectListElement(this);
+    showPage('listPage');
+    page.getEvents(function(events){
+      var eventsList = document.getElementById('listData');
+      eventsList.innerHTML = '';
+      for (var i = 0; i < events.length; i++) {
+        var el = document.createElement('li');
+        el.innerText = events[i];
+        eventsList.appendChild(el);
+      };
+      var main_div = document.getElementById("main");
+      main_div.scrollTop = main_div.scrollHeight;
+    });
+  };
+  document.getElementById('listEvents').addEventListener('click', showEvents);
+
   var showSessions = function(){
     selectListElement(this);
     showPage('tablePage');

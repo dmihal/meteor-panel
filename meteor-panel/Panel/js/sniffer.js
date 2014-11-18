@@ -6,7 +6,8 @@ getSnifferScript = function(){
       result = {};
       result.release = Meteor && Meteor.release;
       result.collections = Object.keys(_meteorCollections);
-    }
+    };
+    window._meteorEvents || (window._meteorEvents = ["Meteor Inspector Started"]);
 
     // Function that does subclassing
     var __extends = function(child, parent) {
@@ -56,6 +57,7 @@ getSnifferScript = function(){
 getTemplateSnifferScript = function(){
   var injected = function(){
     window._meteorTemplates = {};
+    window._meteorEvents || (window._meteorEvents = ["Meteor Inspector Started"]);
 
     Object.keys(window.Template || {}).forEach(function(name) {
       var template = Template[name];
@@ -72,6 +74,7 @@ getTemplateSnifferScript = function(){
         template.instantiate = (function(originalInst,template,name){
           return function(){
             var instance = originalInst.apply(template,arguments);
+            _meteorEvents.push("Template \""+name+"\" instantiated");
             return instance;
           };
         })(template.instantiate,template,name);

@@ -64,6 +64,11 @@ td:first-child, th:first-child {
 	border-left: none;
 }
 
+.biglist li {
+	border-bottom: 1px solid rgb(240, 240, 240);
+	padding: 1px 0;
+}
+
 .page {
 	display: none;
 }
