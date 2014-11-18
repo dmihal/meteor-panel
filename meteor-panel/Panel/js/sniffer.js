@@ -69,6 +69,12 @@ getTemplateSnifferScript = function(){
           hidden: name.indexOf('_') == 0,
           instances:[]
         };
+        template.instantiate = (function(originalInst,template,name){
+          return function(){
+            var instance = originalInst.apply(template,arguments);
+            return instance;
+          };
+        })(template.instantiate,template,name);
       }
     });
 
