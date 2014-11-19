@@ -24,7 +24,6 @@ body {
 #main {
 	display: flex;
 	flex-direction: column;
-	overflow: auto;
 	width: 100%;
 }
 
@@ -42,6 +41,14 @@ body {
 #uninjected {
 	background: #DDD;
 	padding: 5px;
+	min-height: 22px;
+}
+#title {
+	background: #ECECEC;
+	margin: 0;
+	padding: 5px 3px;
+	min-height: 26px;
+	border-bottom: solid 2px #AAA;
 }
 
 table {
@@ -59,6 +66,7 @@ th {
 }
 td, th {
 	border-left: 1px solid #aaa;
+	padding: 1px 4px;
 }
 td:first-child, th:first-child {
 	border-left: none;
@@ -71,6 +79,8 @@ td:first-child, th:first-child {
 
 .page {
 	display: none;
+	overflow: auto;
+	height: 100%;
 }
 
 

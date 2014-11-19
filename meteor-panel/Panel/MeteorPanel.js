@@ -35,7 +35,10 @@
     var click = function(){
       selectListElement(this);
       showPage('templatePage');
-      page.getTemplate(this.innerText, function(template){
+
+      var templateName = this.innerText;
+      document.getElementById('title').innerText = '"'+templateName+'" Template';
+      page.getTemplate(templateName, function(template){
         var eventsList = document.getElementById('templateEvents');
         eventsList.innerHTML = '';
         for (var i = 0; i < template.events.length; i++) {
@@ -59,7 +62,10 @@
     var click = function(){
       selectListElement(this);
       showPage('tablePage');
-      page.loadCollection(this.innerText, function(response){
+
+      var collectionName = this.innerText;
+      document.getElementById('title').innerText = '"'+collectionName+'" Collection';
+      page.loadCollection(collectionName, function(response){
         displayTable(response);
       });
     };
@@ -77,6 +83,7 @@
   var showMeteor = function(){
     selectListElement(this);
     showPage('meteorPage');
+    document.getElementById('title').innerText = 'Meteor Information';
     page.getUser(function(user){
       var username;
       if (user === null){
@@ -94,6 +101,7 @@
   var showEvents = function(){
     selectListElement(this);
     showPage('listPage');
+    document.getElementById('title').innerText = 'Meteor Events';
     page.getEvents(function(events){
       var eventsList = document.getElementById('listData');
       eventsList.innerHTML = '';
@@ -102,7 +110,7 @@
         el.innerText = events[i];
         eventsList.appendChild(el);
       };
-      var main_div = document.getElementById("main");
+      var main_div = document.getElementById("listPage");
       main_div.scrollTop = main_div.scrollHeight;
     });
   };
@@ -111,6 +119,7 @@
   var showSessions = function(){
     selectListElement(this);
     showPage('tablePage');
+    document.getElementById('title').innerText = 'Session Variables';
     page.getSessions(function(sessions){
       document.querySelector("#tableData thead tr").innerHTML = '<th>Key</th><th>Value</th>';
       var body = document.querySelector("#tableData tbody");
