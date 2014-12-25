@@ -63,11 +63,15 @@ getTemplateSnifferScript = function(){
       var template = Template[name];
       if ((template.kind && template.kind.indexOf('Template_') == 0) ||
           (template.viewName && template.viewName.indexOf('Template.') == 0)){
+
+
         _meteorTemplates[name] = {
           helpers:[],
-          events: template._events && template._events.map(function(obj){
-            return obj.events + ' ' + obj.selector;
-          }) || [],
+          events: (template._events && template._events.map(function(obj){ //Old Meteor
+              return obj.events + ' ' + obj.selector;
+            })) || (template.__eventMaps && [].concat.apply([], Template.emailForm.__eventMaps.map(function(obj){ // Meteor 1.0
+              return Object.keys(obj);
+            }))) || [],
           hidden: name.indexOf('_') == 0,
           instances:[]
         };
