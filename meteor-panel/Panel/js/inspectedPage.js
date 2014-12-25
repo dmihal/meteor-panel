@@ -21,14 +21,17 @@ inspectedPage = function () {
     chrome.devtools.inspectedWindow.eval(
       '({hasMeteor: !!window.Meteor, injected: !!window._meteorCollections, collections: Object.keys(window._meteorCollections||{}),'+
         'release: window.Meteor && Meteor.release,'+
-        'templates: EJSON.stringify(' + getTemplateSnifferScript() + ')' +
+        'templates: window.EJSON && EJSON.stringify(' + getTemplateSnifferScript() + ')' +
         ' })',
       function (result, isException) {
+        if (isException){
+          throw isException.value;
+        }
         that.onloaded && that.onloaded(result.hasMeteor, {
           injected: result.injected,
           collections: result.collections,
           release: result.release,
-          templates: EJSON.parse(result.templates)
+          templates: (result.templates && EJSON.parse(result.templates)) || []
         });
       }
     );

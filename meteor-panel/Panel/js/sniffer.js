@@ -69,7 +69,7 @@ getTemplateSnifferScript = function(){
           helpers:[],
           events: (template._events && template._events.map(function(obj){ //Old Meteor
               return obj.events + ' ' + obj.selector;
-            })) || (template.__eventMaps && [].concat.apply([], Template.emailForm.__eventMaps.map(function(obj){ // Meteor 1.0
+            })) || (template.__eventMaps && [].concat.apply([], template.__eventMaps.map(function(obj){ // Meteor 1.0
               return Object.keys(obj);
             }))) || [],
           hidden: name.indexOf('_') == 0,
