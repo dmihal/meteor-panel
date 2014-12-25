@@ -83,6 +83,9 @@ td:first-child, th:first-child {
 	height: 100%;
 }
 
+#templatePage {
+	padding: 0 8px;
+}
 
 .hidden {
 	display: none;
