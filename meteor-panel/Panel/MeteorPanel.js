@@ -15,6 +15,9 @@
       title: "Meteor",
       url: "meteor.tpl.html"
     },{
+      title: "Session",
+      url: "session.tpl.html"
+    },{
       title: "Templates",
       url: "template.tpl.html"
     }];
@@ -28,7 +31,16 @@
     $scope.isSelected = function(tabUrl) {
         return tabUrl == $scope.currentPage;
     }
-  }]);
+  }]).directive('ngtable', function () {
+    return {
+        restrict: 'E',
+        scope: {
+          headers: "=headers",
+          rows: "=data"
+        },
+        templateUrl: 'partials/table.tpl.html'
+    }
+  });
 
   var page = new inspectedPage();
   page.onloaded = function(hasMeteor, stats){
