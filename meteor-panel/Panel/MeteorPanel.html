@@ -2,8 +2,8 @@
 <head>
   <link rel='stylesheet' href='MeteorPanel.css'>
 </head>
-<body>
-  <div id="container">
+<body ng-app="meteorPanel">
+  <div id="container" ng-controller="Nav">
     <div id="leftPanel">
       <ol id="nav">
         <li id="listMeteor" class="selected">Meteor</li>
@@ -27,12 +27,9 @@
         <button id="reload">Reload</button>
       </div>
       <h2 id="title">Meteor Information</h2>
-      <div id="meteorPage" class="page">
-        <ul>
-          <li>Meteor Version: <span id="versionNum">unknown</span></li>
-          <li>User: <span id="username"></span></li>
-        <ul>
+      <div id="maincontent" ng-include="currentPage">
       </div>
+      
       <div id="tablePage" class="page">
         <table id="tableData">
           <thead><tr></tr></thead>
@@ -50,7 +47,14 @@
       </div>
     </div>
   </div>
-
+  <script type="text/ng-template" id="meteor.tpl.html">
+    <div id="meteorPage" class="page">
+      <ul>
+        <li>Meteor Version: <span id="versionNum">unknown</span></li>
+        <li>User: <span id="username"></span></li>
+      <ul>
+    </div>
+  </script>
   <script src="lib/angular.js"></script>
   <script src="lib/underscore.js"></script>
   <script src="lib/base64.js"></script>

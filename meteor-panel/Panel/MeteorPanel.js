@@ -9,6 +9,17 @@
   // there are definitely mechanisms for that, like
   // "background pages."
 
+  angular.module("meteorPanel",[])
+  .controller('Nav', ['$scope',function($scope){
+    $scope.tabs = [{
+      title: "Meteor"
+    },{
+      title: "Templates"
+    }];
+
+    $scope.currentPage = 'meteor.tpl.html';
+  }]);
+
   var page = new inspectedPage();
   page.onloaded = function(hasMeteor, stats){
     if (hasMeteor){
