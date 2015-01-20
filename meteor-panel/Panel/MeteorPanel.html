@@ -6,6 +6,7 @@
   <div id="container" ng-controller="Nav">
     <div id="leftPanel">
       <ol id="nav">
+        <li ng-repeat="tab in tabs" ng-class="{selected:isSelected(tab.url)}" ng-click="tabClicked(tab)">{{tab.title}}</li>
         <li id="listMeteor" class="selected">Meteor</li>
         <li id="listEvents">Events</li>
         <li id="listCollections">Collections</li>
@@ -40,19 +41,21 @@
         <ol id="listData" class="biglist">
         </ol>
       </div>
-      <div id="templatePage" class="page">
-        <h3>Events</h3>
-        <ul id="templateEvents">
-        </ul>
-      </div>
     </div>
   </div>
   <script type="text/ng-template" id="meteor.tpl.html">
-    <div id="meteorPage" class="page">
+    <div id="meteorPage">
       <ul>
         <li>Meteor Version: <span id="versionNum">unknown</span></li>
         <li>User: <span id="username"></span></li>
       <ul>
+    </div>
+  </script>
+  <script type="text/ng-template" id="template.tpl.html">
+    <div id="templatePage">
+      <h3>Events</h3>
+      <ul id="templateEvents">
+      </ul>
     </div>
   </script>
   <script src="lib/angular.js"></script>

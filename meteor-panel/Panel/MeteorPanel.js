@@ -12,12 +12,22 @@
   angular.module("meteorPanel",[])
   .controller('Nav', ['$scope',function($scope){
     $scope.tabs = [{
-      title: "Meteor"
+      title: "Meteor",
+      url: "meteor.tpl.html"
     },{
-      title: "Templates"
+      title: "Templates",
+      url: "template.tpl.html"
     }];
 
     $scope.currentPage = 'meteor.tpl.html';
+
+    $scope.tabClicked = function (tab) {
+        $scope.currentPage = tab.url;
+    }
+    
+    $scope.isSelected = function(tabUrl) {
+        return tabUrl == $scope.currentPage;
+    }
   }]);
 
   var page = new inspectedPage();
