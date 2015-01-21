@@ -47,7 +47,9 @@
     </div>
   </script>
   <script type="text/ng-template" id="session.tpl.html">
-    <ngtable></ngtable>
+    <div ng-controller="session">
+      <ngtable headers="headers" rows="data"></ngtable>
+    </div>
   </script>
   <script type="text/ng-template" id="template.tpl.html">
     <div id="templatePage">

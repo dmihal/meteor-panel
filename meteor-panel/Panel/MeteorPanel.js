@@ -31,12 +31,31 @@
     $scope.isSelected = function(tabUrl) {
         return tabUrl == $scope.currentPage;
     }
-  }]).directive('ngtable', function () {
+  }])
+  .factory('session',function(){
+    var session = {};
+
+    page.getSessions(function(sessions){
+      for (var key in sessions){
+        session[key] = sessions[key];
+      }
+    });
+
+    return session;
+  })
+  .controller('session', function($scope, session){
+    $scope.headers = ['Key','Value'];
+    $scope.data = Object.keys(session).map(function(value){
+      return [value, session[value]];
+    });
+
+  })
+  .directive('ngtable', function () {
     return {
         restrict: 'E',
         scope: {
           headers: "=headers",
-          rows: "=data"
+          rows: "=rows"
         },
         templateUrl: 'partials/table.tpl.html'
     }
