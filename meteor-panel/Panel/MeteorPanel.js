@@ -32,23 +32,27 @@
         return tabUrl == $scope.currentPage;
     }
   }])
-  .factory('session',function(){
-    var session = {};
+  .factory('session',function($q){
 
-    page.getSessions(function(sessions){
-      for (var key in sessions){
-        session[key] = sessions[key];
-      }
-    });
+    var getSession = function(){
+      var deferred = $q.defer();
+      page.getSessions(function(sessions){
+        deferred.resolve(sessions);
+      });
+      return deferred.promise;
+    }
 
-    return session;
+    return {
+      getSession: getSession
+    };
   })
   .controller('session', function($scope, session){
     $scope.headers = ['Key','Value'];
-    $scope.data = Object.keys(session).map(function(value){
-      return [value, session[value]];
+    session.getSession().then(function(sessions) {
+      $scope.data = Object.keys(sessions).map(function(value){
+        return [value, sessions[value]];
+      });
     });
-
   })
   .directive('ngtable', function () {
     return {
