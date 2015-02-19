@@ -10,7 +10,17 @@
   // "background pages."
 
   angular.module("meteorPanel",[])
-  .controller('Nav', ['$scope',function($scope){
+  .factory('pageInfo',function($q){
+    var getPageInfo = function(){
+      var deferred = $q.defer();
+      
+      return deferred.promise;
+    };
+    return {
+      getPageInfo: getPageInfo
+    }
+  })
+  .controller('Nav', ['$scope',function($scope, pageInfo){
     $scope.tabs = [{
       title: "Meteor",
       url: "meteor.tpl.html"
@@ -19,7 +29,8 @@
       url: "session.tpl.html"
     },{
       title: "Templates",
-      url: "template.tpl.html"
+      url: "template.tpl.html",
+      children: ["test",'t2']
     }];
 
     $scope.currentPage = 'meteor.tpl.html';

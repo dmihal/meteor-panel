@@ -6,7 +6,10 @@
   <div id="container" ng-controller="Nav">
     <div id="leftPanel">
       <ol id="nav">
-        <li ng-repeat="tab in tabs" ng-class="{selected:isSelected(tab.url)}" ng-click="tabClicked(tab)">{{tab.title}}</li>
+        <li ng-repeat-start="tab in tabs" ng-class="{selected:isSelected(tab.url)}" ng-click="tabClicked(tab)">{{tab.title}}</li>
+        <ol ng-repeat-end ng-if="tab.children">
+          <li ng-repeat="child in tab.children">{{child}}</li>
+        </ol>
         <li id="listMeteor" class="selected">Meteor</li>
         <li id="listEvents">Events</li>
         <li id="listCollections">Collections</li>
