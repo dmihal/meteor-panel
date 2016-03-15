@@ -1,0 +1,19 @@
+{
+  "name": "meteor-panel",
+  "version": "0.1.0",
+  "description": "Debug Meteor projects in the Chrome Dev Tools with this extension.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmihal/meteor-panel.git"
+  },
+  "author": "David Mihal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dmihal/meteor-panel/issues"
+  },
+  "homepage": "https://github.com/dmihal/meteor-panel#readme"
+}
