@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/dmihal/meteor-panel/issues"
   },
-  "homepage": "https://github.com/dmihal/meteor-panel#readme"
+  "homepage": "https://github.com/dmihal/meteor-panel#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
 }
