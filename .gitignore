@@ -1,6 +1,10 @@
+build
+dist
+
 .DS_Store
 *~
 *.pem
+
 
 ## Node.js ##
 
