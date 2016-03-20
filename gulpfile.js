@@ -1,12 +1,12 @@
 'use strict';
 
-// npm install gulp gulp-minify-css gulp-uglify gulp-clean gulp-cleanhtml gulp-jshint gulp-strip-debug gulp-zip --save-dev
-
 var gulp = require('gulp'),
+	babel = require('gulp-babel'),
 	clean = require('gulp-clean'),
 	cleanhtml = require('gulp-cleanhtml'),
 	minifycss = require('gulp-minify-css'),
 	jshint = require('gulp-jshint'),
+	sourcemaps = require('gulp-sourcemaps'),
 	stripdebug = require('gulp-strip-debug'),
 	uglify = require('gulp-uglify'),
 	zip = require('gulp-zip');
@@ -48,8 +48,12 @@ gulp.task('scripts', ['jshint'], function() {
 	gulp.src('src/lib/**/*.js')
 		.pipe(gulp.dest('build/scripts/vendors'));
 	return gulp.src(['src/**/*.js', '!src/vendors/**/*.js'])
-		.pipe(stripdebug())
-		.pipe(uglify({outSourceMap: true}))
+		.pipe(sourcemaps.init())
+		.pipe(babel({
+			presets: ['es2015']
+		}))
+		.pipe(uglify())
+        .pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('build'));
 });
 
@@ -79,5 +83,5 @@ gulp.task('zip', ['html', 'scripts', 'styles', 'copy'], function() {
 
 // run all tasks after build directory has been cleaned
 gulp.task('default', ['clean'], function() {
-    gulp.start('zip');
+	gulp.start('zip');
 });
