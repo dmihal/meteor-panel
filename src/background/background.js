@@ -27,5 +27,8 @@ var actions = {
       file: 'background/content-script.js',
       runAt: 'document_start'
     });
+  },
+  documentLoaded(msg, port) {
+    console.log('Recieved message from document', msg);
   }
 };
