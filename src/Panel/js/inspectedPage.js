@@ -3,7 +3,7 @@ inspectedPage = function () {
   var watchRefresh = function (cb) {
     var port = chrome.extension.connect();
     port.postMessage({
-      action: 'register',
+      action: 'listenForReload',
       inspectedTabId: chrome.devtools.inspectedWindow.tabId
     });
     port.onMessage.addListener(function(msg) {

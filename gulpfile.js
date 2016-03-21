@@ -46,8 +46,8 @@ gulp.task('jshint', function() {
 // copy vendor scripts and uglify all other scripts, creating source maps
 gulp.task('scripts', ['jshint'], function() {
 	gulp.src('src/lib/**/*.js')
-		.pipe(gulp.dest('build/scripts/vendors'));
-	return gulp.src(['src/**/*.js', '!src/vendors/**/*.js'])
+		.pipe(gulp.dest('build/lib'));
+	return gulp.src(['src/**/*.js', '!src/lib/**/*.js'])
 		.pipe(sourcemaps.init())
 		.pipe(babel({
 			presets: ['es2015']
