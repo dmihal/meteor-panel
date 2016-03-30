@@ -2,10 +2,13 @@
 
 var gulp = require('gulp'),
 	babel = require('gulp-babel'),
+	babelify = require('babelify'),
+	browserify = require('browserify'),
 	clean = require('gulp-clean'),
 	cleanhtml = require('gulp-cleanhtml'),
 	minifycss = require('gulp-minify-css'),
 	jshint = require('gulp-jshint'),
+	source = require('vinyl-source-stream'),
 	sourcemaps = require('gulp-sourcemaps'),
 	stripdebug = require('gulp-strip-debug'),
 	uglify = require('gulp-uglify'),
@@ -45,16 +48,23 @@ gulp.task('jshint', function() {
 
 // copy vendor scripts and uglify all other scripts, creating source maps
 gulp.task('scripts', ['jshint'], function() {
-	gulp.src('src/lib/**/*.js')
-		.pipe(gulp.dest('build/lib'));
-	return gulp.src(['src/**/*.js', '!src/lib/**/*.js'])
+	gulp.src('src/main.js')
+		.pipe(gulp.dest('build'));
+	gulp.src('src/background/*.js')
 		.pipe(sourcemaps.init())
 		.pipe(babel({
 			presets: ['es2015']
 		}))
 		.pipe(uglify())
-        .pipe(sourcemaps.write('.'))
-		.pipe(gulp.dest('build'));
+		.pipe(sourcemaps.write('.'))
+		.pipe(gulp.dest('build/background'));
+
+	return browserify('./src/Panel/js/app.js', { debug: true })
+		.transform(babelify)
+		.bundle()
+		.pipe(source('app.js'))
+		.pipe(gulp.dest('build/Panel/js'));
+
 });
 
 // minify styles

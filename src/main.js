@@ -1,6 +1,6 @@
 chrome.devtools.panels.create(
     'Meteor',
     null, // No icon path
-    'Panel/MeteorPanel.html',
+    'Panel/index.html',
     null // no callback needed
 );
