@@ -25,6 +25,11 @@ var DocumentBridge = {
     });
   },
 
+  callSniffer(funcName, callback) {
+    let jsMethod = `window._meteorPanel.${funcName}()`;
+    chrome.devtools.inspectedWindow.eval(jsMethod, callback);
+  },
+
   addMessageListener(listener) {
     this.port.onMessage.addListener(listener);
   },

@@ -1,3 +1,5 @@
+require("babel-polyfill");
+
 var React = require('react');
 
 var MeteorPanel = require('./components/MeteorPanel');

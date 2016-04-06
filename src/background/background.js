@@ -1,10 +1,11 @@
-// notify of page refreshes
+// Maintain of ports to broadcast messages not handled by background page.
 let ports = [];
 let broadcast = function(msg) {
   ports.forEach(function(port){
     port.postMessage(msg);
   });
 };
+
 chrome.extension.onConnect.addListener(function(port) {
   ports.push(port);
 
@@ -15,7 +16,13 @@ chrome.extension.onConnect.addListener(function(port) {
       broadcast(msg);
     }
   });
+
+  // When a port disconnects, remove it from the array of ports.
+  port.onDisconnect.addListener((port) => {
+    ports.splice(ports.indexOf(port), 1);
+  });
 });
+
 var actions = {
   listenForReload(msg, port) {
     var respond = function (tabId, changeInfo, tab) {

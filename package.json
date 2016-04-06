@@ -34,6 +34,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
+    "babel-polyfill": "^6.7.4",
     "flux": "^2.1.1",
     "keymirror": "^0.1.1",
     "react": "^0.14.7"

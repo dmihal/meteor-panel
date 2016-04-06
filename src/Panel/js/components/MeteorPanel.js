@@ -1,12 +1,14 @@
 var React = require('react');
 var DocumentBridge = require('../DocumentBridge');
+var Templates = require('../stores/Templates');
 
 
 var MeteorPanel = React.createClass({
 
   getInitialState() {
     return {
-      isLoaded: false
+      isLoaded: false,
+      templates: Templates.getTemplates()
     };
   },
 
@@ -16,6 +18,10 @@ var MeteorPanel = React.createClass({
         this.setState({isLoaded: true});
       }
     });
+    Templates.addChangeListener(() => {
+      this.setState({templates: Templates.getTemplates()})
+    });
+
     DocumentBridge.injectScript();
   },
 
@@ -24,7 +30,14 @@ var MeteorPanel = React.createClass({
 
     var loadedText = isLoaded ? "Sniffer loaded" : "Not loaded";
 
-  	return React.DOM.div(null, loadedText);
+    let templateNodes = []
+    this.state.templates.forEach(template => {
+      templateNodes.push(React.DOM.div(null, template.name));
+    });
+
+    return React.DOM.div(null,
+      React.DOM.div(null, loadedText),
+      React.DOM.div(null, templateNodes));
   },
 
 
