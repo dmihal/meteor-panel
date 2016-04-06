@@ -1,3 +1,7 @@
+import DocumentBridge from "js/document_bridge";
+
+new DocumentBridge();
+
 (function () {
 
   // This will run once on panel page load, which is basically

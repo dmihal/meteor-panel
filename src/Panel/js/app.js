@@ -1,8 +1,8 @@
 var React = require('react');
 
-/*var TodoApp = require('./components/TodoApp.react');
+var MeteorPanel = require('./components/MeteorPanel');
 
 React.render(
-  <TodoApp />,
-  document.getElementById('todoapp')
-);*/
+  React.createElement(MeteorPanel),
+  document.getElementById('app')
+);

@@ -1,10 +1,18 @@
 // notify of page refreshes
+let ports = [];
+let broadcast = function(msg) {
+  ports.forEach(function(port){
+    port.postMessage(msg);
+  });
+};
 chrome.extension.onConnect.addListener(function(port) {
+  ports.push(port);
+
   port.onMessage.addListener(function (msg) {
     if (actions[msg.action]){
       actions[msg.action](msg, port);
     } else {
-      console.error('Could not dispatch message', msg);
+      broadcast(msg);
     }
   });
 });
@@ -27,8 +35,5 @@ var actions = {
       file: 'background/content-script.js',
       runAt: 'document_start'
     });
-  },
-  documentLoaded(msg, port) {
-    console.log('Recieved message from document', msg);
   }
 };
