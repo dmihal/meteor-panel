@@ -19,10 +19,13 @@ let Pages = Object.assign({}, EventEmitter.prototype, {
     return page.id;
   },
 
+  getPages() {
+    return this.pages;
+  },
+
   getPage(id) {
     return this.pages.get(id);
   }
 });
-Pages.constructor();
 
 module.exports = Pages;

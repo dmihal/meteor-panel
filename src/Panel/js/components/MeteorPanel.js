@@ -1,4 +1,6 @@
 var React = require('react');
+var Constants = require('../Constants');
+var Dispatcher = require('../Dispatcher');
 var DocumentBridge = require('../DocumentBridge');
 var Templates = require('../stores/Templates');
 var Pages = require('../stores/Pages');
@@ -26,6 +28,8 @@ var MeteorPanel = React.createClass({
       this.setState({templates: Templates.getTemplates()})
     });
 
+    Dispatcher.register(this.handleActions);
+
     DocumentBridge.injectScript();
   },
 
@@ -48,7 +52,13 @@ var MeteorPanel = React.createClass({
       React.DOM.div(null, templateNodes));
   },
 
-
+  handleActions(action) {
+    switch(action.actionType) {
+      case Constants.SET_PAGE:
+        this.setState({pageId: action.id});
+        break;
+    }
+  }
 });
 
 module.exports = MeteorPanel;
