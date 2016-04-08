@@ -4,16 +4,37 @@ window._meteorPanel = (function(){
     document.dispatchEvent(customEvent);
   };
 
+  // A page is "dirty" if meteor is already loaded before the sniffer runs.
+  // Sniffing collections can't be setup if the page is already dirty.
+  let dirty = false;
+
   let docLoaded = (document.readyState === "complete");
   if (!docLoaded) {
     document.addEventListener('DOMContentLoaded', function(){
       sendMessage({action: 'documentLoaded'});
+      docLoaded = true;
     });
   } else {
+    dirty = true;
     sendMessage({action: 'documentLoaded'});
   }
 
   return {
+    getStatus() {
+      if (!window.Meteor) {
+        return {
+          loaded: docLoaded,
+          meteor: false,
+        }
+      }
+      return {
+        loaded: docLoaded,
+        meteor: true,
+        dirty,
+        version: Meteor.release,
+        packages: Object.getOwnPropertyNames(Package),
+      }
+    },
     getTemplates() {
       let templates = [];
       for (var templateName in Template) {

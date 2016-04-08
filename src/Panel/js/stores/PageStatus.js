@@ -3,9 +3,11 @@ var EventEmitter = require('events').EventEmitter;
 
 let PageStatus = Object.assign({}, EventEmitter.prototype, {
   DOCUMENT_READY: 'page-added',
+  STATUS_UPDATED: 'status-updated',
 
   loaded: false,
   dirty: false,
+  status: {},
   
   constructor(){
     DocumentBridge.isInjected(isInjected => {
@@ -20,6 +22,22 @@ let PageStatus = Object.assign({}, EventEmitter.prototype, {
         this.emit(this.DOCUMENT_READY);
         this.loaded = true;
       }
+    });
+
+    this.on(this.DOCUMENT_READY, this.updateStatus);
+  },
+
+  getStatus() {
+    return this.status;
+  },
+
+  updateStatus() {
+    DocumentBridge.callSniffer("getStatus", response => {
+      this.status = response;
+      this.loaded = response.loaded;
+      this.dirty = response.dirty;
+
+      this.emit(this.STATUS_UPDATED, this.status);
     });
   },
 
