@@ -10,6 +10,8 @@ var NavTree = require('./NavTree');
 var InfoPage = require('./InfoPage');
 var TemplatesPage = require('./TemplatesPage');
 
+var div = React.DOM.div;
+
 
 var MeteorPanel = React.createClass({
 
@@ -38,10 +40,15 @@ var MeteorPanel = React.createClass({
 
     let currentPage = Pages.getPage(this.state.pageId);
 
-    return React.DOM.div(null,
-      React.DOM.div(null, loadedText),
-      React.createElement(NavTree),
-      React.createElement(currentPage.component));
+    return div({className: 'container'},
+      div({className: 'alert'}, loadedText),
+      div({className: 'containerBody'},
+        React.createElement(NavTree),
+        div({className: 'content'},
+          React.createElement(currentPage.component)
+        )
+      )
+    );
   },
 
   handleActions(action) {

@@ -10,7 +10,9 @@ var NavTree = React.createClass({
       links.push(React.createElement(NavItem, {page}));
     });
 
-    return React.DOM.div(null, links);
+    return React.DOM.div({
+      className: 'navTree',
+    }, links);
   }
 });
 

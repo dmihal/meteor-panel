@@ -1,0 +1,34 @@
+body {
+	margin: 0;
+}
+
+html, body, #app, .container {
+	height: 100%;
+}
+
+.container {
+	display: flex;
+    flex-direction: column;
+}
+
+.containerBody {
+	display: flex;
+	flex: 1;
+}
+
+.content, .navTree {
+    overflow-y: auto;
+}
+
+.content {
+	flex: 1;
+}
+
+.navTree {
+    background: #F1F1F1;
+    flex: 0 200px;
+}
+
+.navItem {
+	display: block;
+}
