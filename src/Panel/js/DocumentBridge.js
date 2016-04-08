@@ -19,10 +19,23 @@ var DocumentBridge = {
   },
 
   injectScript() {
-    this.port.postMessage({
-      action: 'injectScript',
-      inspectedTabId: this.tabId
-    });
+    // Only inject if the script hasn't been injected yet.
+    this.isInjected(isInjected =>{
+      if (!isInjected) {
+        this.port.postMessage({
+          action: 'injectScript',
+          inspectedTabId: this.tabId
+        });
+      }
+    })
+  },
+
+  /**
+   * Check if ths sniffer script has been injected into the inspected page.
+   * @param callback {function} Callback that accepts a boolean argument
+   */
+  isInjected(callback) {
+    chrome.devtools.inspectedWindow.eval("!!window._meteorPanel", callback);
   },
 
   callSniffer(funcName, callback) {

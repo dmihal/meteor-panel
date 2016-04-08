@@ -4,6 +4,7 @@ var Dispatcher = require('../Dispatcher');
 var DocumentBridge = require('../DocumentBridge');
 var Templates = require('../stores/Templates');
 var Pages = require('../stores/Pages');
+var PageStatus = require('../stores/PageStatus');
 var NavTree = require('./NavTree');
 
 var InfoPage = require('./InfoPage');
@@ -20,10 +21,10 @@ var MeteorPanel = React.createClass({
   },
 
   componentDidMount: function() {
-    DocumentBridge.addMessageListener((msg) => {
-      if (msg.action = 'documentLoaded') {
-        this.setState({isLoaded: true});
-      }
+    DocumentBridge.isInjected(isLoaded => this.setState({isLoaded}));
+
+    PageStatus.on(PageStatus.DOCUMENT_READY, () => {
+      this.setState({isLoaded: true});
     });
 
     Dispatcher.register(this.handleActions);

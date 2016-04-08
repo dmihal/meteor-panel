@@ -1,6 +1,7 @@
 
 var DocumentBridge = require('../DocumentBridge');
 var EventEmitter = require('events').EventEmitter;
+var PageStatus = require('./PageStatus');
 
 const TEMPLATES_CHANGED = 'templates-changed';
 
@@ -8,11 +9,7 @@ let Templates = Object.assign({}, EventEmitter.prototype, {
   templates: new Map(),
 
   constructor(){
-    DocumentBridge.addMessageListener((msg) => {
-      if (msg.action == 'documentLoaded') {
-        this.loadTemplates();
-      }
-    });
+    PageStatus.on(PageStatus.DOCUMENT_READY, () => this.loadTemplates());
   },
 
   loadTemplates() {
